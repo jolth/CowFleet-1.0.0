@@ -150,6 +150,7 @@ def listingPhones(id):
             WHERE pa.phone_id=p.id AND tp.id=p.type AND pa.client_id=""" + sqlquote(id))
     return [tuple(i.values()) for i in result.list()]
 
+
 def listingAllVehicle():
     """
         Query que abstrae todos los vehículos.
@@ -211,6 +212,16 @@ def generalView():
             l.velocidad, l.altura, l.satelites, l.ubicacion
             FROM vehiculos v, last_positions_gps l, gps g
             WHERE v.gps_id=g.id AND g.id=l.gps_id""")
+
+def countEvent():
+    """
+        Retorna el numero de eventos sin gestionar.
+        Usage:
+        >>> from db import countEvent
+        >>> a = countEvent()
+
+    """
+    return config.DB.query("""SELECT count(*) FROM eventos WHERE admin_state <> 't';""")
 
 
 def insertPhone(storage, **sequence_id):

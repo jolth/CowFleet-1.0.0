@@ -26,6 +26,22 @@ jQuery(document).ready(function(){
         jQuery("#menu ul li").find("span").removeClass("open");
         jQuery(this).addClass("open");
     });
+
+    // Gestión de Eventos
+    //setInterval(function(){getNumEvents();}, 20000);
+    var getNumEvents = function(){ 
+      var numevnt = null;
+      $$.getJSON('/admin/listeventjson', function(data){
+        //console.log(data); 
+        numevnt = data[0].count; 
+        //console.log(numevnt);
+        $$('#badge0').text(numevnt)
+                     .addClass('badge');
+        $$('#badge1').text(numevnt);
+      });
+    };
+    getNumEvents();
+
 });
 </script>
 </head>
@@ -35,12 +51,12 @@ jQuery(document).ready(function(){
     <div id="menu">
         <h3><a id="namemenu" href="/admin">Gesti&oacute;n Log&iacute;stica</a></h3>
         <ul>
-            <li><span class="uno"><a href="javascript:void(0);" id="link-posts">Monitoreo <span class="badge">1</span></a></span>
+            <li><span class="uno"><a href="javascript:void(0);" id="link-posts">Monitoreo <span id="badge0"></span></a></span>
                 
                 <ul class="hide">
                     <li><a href="/admin/generalview" class="list">Vista General</a></li>
                     <!--<li><a href="/admin/list" class="list">Listar Veh&iacute;culos</a></li>-->
-                    <li><a href="?p=posts&amp;sec=vista" class="list">Eventos <span class="badge">1</span></a></li>
+                    <li><a href="/admin/events" class="list">Eventos <span id="badge1" class="badge"></span></a></li>
                     <li><a href="?p=posts&amp;sec=list" class="list">Reportes</a></li>
                 </ul>
             </li>

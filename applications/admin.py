@@ -28,8 +28,11 @@ urls = (
   "/listclient", "listclient",
   "/deleteclient", "deleteclient",
   "/adduser", "adduser",
+  "/listuser","listuser",
   "/listgspjson", "listgspjson",
   "/listingphones", "listingphones",
+  "/events","events",
+  "/listeventjson","listeventjson",
 )
 
 class reuser:
@@ -175,6 +178,12 @@ class adduser:
             return renderbase_admin.adduser(web.ctx.session, f, msgerr=u'Los datos no son válidos.')
 
 
+class listuser:
+    @Sesion
+    def GET(self):
+        return listuser
+
+
 class addvehicle:
     @Sesion
     def GET(self):
@@ -276,6 +285,19 @@ class listingphones:
         i = web.input(id=None)
         web.header('content-Type', 'application/json')
         return json.dumps(listingPhones(i.id))
+
+class events:
+    @Sesion
+    def GET(self):
+        return events
+
+class listeventjson:
+    @Sesion
+    def GET(self):
+        import simplejson as json 
+        from db import countEvent
+        web.header('content-Type', 'application/json')
+        return json.dumps([row for row in countEvent()])
 
 
 # App:

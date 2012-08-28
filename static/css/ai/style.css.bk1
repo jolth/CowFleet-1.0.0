@@ -9,7 +9,6 @@ img {border:0;}
 a {text-decoration:none;}
 ol, ul {list-style:none;}
 
-
 /* Elementos basicos */
 
 body {
@@ -276,12 +275,4 @@ text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 white-space:nowrap;
 vertical-align:baseline;
 background-color:#999;
-}
-
-/* Media */
-@media screen and (max-width: 1300px) {
-    #contenido {
-      width:auto;
-      padding:12px 12px;
-    }
 }
