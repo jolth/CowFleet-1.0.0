@@ -24,8 +24,62 @@ $def with (events)
                 $#<td class="state" state="$i.admin_state"></td></tr>
         </tbody>
     </table>
+
+<div id="dialogclients" title="Lista de Contactos" class="users-contain">
+    <p>Los contactos para el veh&iacute;culo <span style="font-weight:bold;color:#2180CE;"></span> son:</p>
+    <table id="phones" class="ui-widget ui-widget-content">
+        <thead>
+            <tr class="ui-widget-header ">
+                <th>Nombre</th>
+                <th>Documento</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="dialogdelete" title="Eliminar Evento">
+    <h3>Advertencia</h3>
+    <p>Esta acci&oacute;n borrar&aacute; permanentemente el Evento <span style="font-weight:bold;color:#2180CE;"></span> 
+     para el Vehiculo <span style="font-weight:bold;color:#2180CE;" id="veh"></span>.</p>
+    <p>¿Est&aacute; seguro que desea realizar esta acci&oacute;n?</p>
+</div>
+
 <script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
-<script src="/static/js/windowmodal.js"></script>
+<!--<script src="/static/js/windowmodal.js"></script>-->
+<script>
+jQuery(document).ready(function(){
+    // Dialog Client
+    jQuery('#dialogclients').dialog({
+             autoOpen: false,
+             width: 500,
+             modal: true,
+             buttons: {
+                "Cerrar": function() {
+                          $$(this).dialog("close");
+                 }
+             }
+    });
+    // Dialog Delete
+    jQuery('#dialogdelete').dialog({
+             autoOpen: false,
+             width: 500,
+             modal: true,
+             buttons: {
+                "Cancelar": function() {
+                          $$(this).dialog("close");
+                 },
+                "Eliminar": function() {
+                       var id=$$(this).data('data-id');
+                       //var name=$$(this).data('data-name');
+                       var url=$$(this).data('data-url');
+                       href = url+'?id='+id//+'&amp;name='+name;
+                       console.log(href);
+                       window.location.href = href;
+                       $$(this).dialog("close");
+                 }
+             }
+    });
+});
+</script>
 <script>
  jQuery(document).ready(function(){
     // Capitalize JavaScrip
@@ -53,18 +107,6 @@ $def with (events)
             $$('#dialogdelete').dialog('open');
             return false;
     });
-/*    
-    // Dialog Client
-    jQuery('#dialogclients').dialog({
-             autoOpen: false,
-             width: 500,
-             modal: true,
-             buttons: {
-                "Cerrar": function() {
-                          $$(this).dialog("close");
-                 },
-             }
-    });*/ 
     
     // link Clients
     jQuery('.search').click(function(){
@@ -113,7 +155,7 @@ $def with (events)
             return false;
     }); 
 ////////////////////////////////////////////////////////////////////
-                    function initialize(lat, lng) {
+/*                    function initialize(lat, lng) {
                       var latlng = new google.maps.LatLng(lat,lng);
                       var options = {
                         zoom: 19,
@@ -152,6 +194,6 @@ $def with (events)
                        
                         // render map
                         initialize(lat, lng);      
-                    });
+                    });*/
  });
 </script>

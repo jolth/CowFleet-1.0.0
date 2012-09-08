@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
-#import sys
+"""
+    Autor: Jorge A. Toro [jolthgs@gmail.com]
+"""
+# Interfaz
+import sys, os
+ROOT_PATH = os.path.dirname(__file__)
+sys.path.append(ROOT_PATH)
+
+# Módulos
 import web
 from urls import urls
-#import applications.user as user
-#import sqlite3 as db
 import view, config
 from view import render
 
-
-#urls = (
-#    "/user", user.app_user,
-#    "/", 'Index',
-#    "/login", 'Login',
-#    "/logout", 'Logout'
-#)
-
-#template = web.template.render('./templates')
-
-# Fromulario de Login:
-#login = web.form.Form(
-#    web.form.Textbox('Username', web.form.notnull),
-#    web.form.Password('Password', web.form.notnull),
-#)
 
 #web.config.debug = False # descomentar en producción
 app = web.application(urls, locals())

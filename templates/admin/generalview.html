@@ -6,12 +6,10 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
 <div id="view"></div>
 <p>$msg</p>
 <!--<p><a class="activate_modal" name="first_window" href="#">Primera ventana modal</a></p>-->
-
 <!-- mask modal -->
 <div id="mask" class="close_modal"></div>
 <!-- Ventanas Modal -->
 <div id="first_window" class="modal_window1" style="width:95%; height:90%"></div>
-
 <!--<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>-->
 <script>
  jQuery(document).ready(function(){
@@ -32,39 +30,13 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="/static/js/windowmodal.js"></script>
 <script>
-            jQuery(document).ready(function(){
-                    // Aplicamos el modal al <vid> 
-                    jQuery('.modal_window1').jtModal();
+jQuery(document).ready(function(){
+    // Aplicamos el modal al <vid> 
+    jQuery('.modal_window1').jtModal();
 
-                    /*function initialize() {
-                      var latlng = new google.maps.LatLng(5.06798,-75.51738);
-                      var myOptions = {
-                        zoom: 16,
-                        center: latlng,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                      };
-                      var map = new google.maps.Map(document.getElementById("first_window"),
-                        myOptions);
-                    }
-
-                    initialize();*/
-
-
-                    /*jQuery('.activate_modal').click(function(){
-                        console.log('CLICK');
-                        // obtener el id de la ventana modal almacenado 
-                        // en el name del elemento activado.
-                        var modal_id = jQuery(this).attr('name');
-
-                        // utilizar la funciÃ³n para mostrar
-                        show_modal(modal_id);
-
-                        initialize();      
-                    });*/
-
-                    jQuery('.close_modal').click(function(){
-                        // utilizar la función para cerrar
-                        close_modal();
-                    });
-            });
+    jQuery('.close_modal').click(function(){
+        // utilizar la función para cerrar
+         close_modal();
+    });
+});
 </script>
