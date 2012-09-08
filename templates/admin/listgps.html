@@ -1,4 +1,5 @@
 $def with (session, gps, msg=None)
+<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 
 $# Nombre del cliente:
 $var username: $session.username.nombre1.lower().capitalize() $session.username.apellido1.lower().capitalize()
@@ -27,7 +28,6 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
 
 <p>$msg</p>
 
-<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 <script>
  jQuery(document).ready(function(){
 

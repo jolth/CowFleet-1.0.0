@@ -151,6 +151,29 @@ def listingPhones(id):
     return [tuple(i.values()) for i in result.list()]
 
 
+def listingClients(id):
+    """
+        Lista los clientes propietarios de un vehiculo.
+        usage:
+        >>> from db import listingClients
+        >>> a = listingClients(5) # id del vehiculo 
+        >>>
+        >>> for i in a:
+        ...     print i
+        ... 
+        (u'jorge,alonso,toro,hoyos', u'11814584')
+        >>> 
+    """
+    from web.db import sqlquote
+
+    result = config.DB.query("""
+            SELECT (c.nombre1 || ',' || COALESCE(c.nombre2, '') || ',' || c.apellido1 || ',' || COALESCE(c.apellido2,'')) AS nombre,
+            c.documento
+            FROM clientes_vehiculos cv, clientes c
+            WHERE cv.cliente_id=c.id AND cv.vehiculo_id=""" + sqlquote(id))
+    return [tuple(i.values()) for i in result.list()]
+
+
 def listingAllVehicle():
     """
         Query que abstrae todos los vehículos.
@@ -187,6 +210,37 @@ def listingAllVehicle():
             LEFT OUTER JOIN combustibles AS cb ON (v.combustible_id=cb.id)
             LEFT OUTER JOIN servicio_vehiculo AS sv ON (v.servicio_id=sv.id);
             """)
+
+def unmanagedEventListAdmin():
+    """
+        Query que obtiene todos los eventos no gestionados por el administrador.
+        usage:
+        >>> from db import unmanagedEventListAdmin
+        >>> a = unmanagedEventListAdmin()
+        >>> for i in a:
+        ...     for k,v in i.items():
+        ...             print "%s=%s" % (k,v),
+        ... 
+        vehicle_id=4 name=Panico id=46 user_state=False fecha=2012-08-28 11:56:54.638781-05:00 placa=ttq000 
+        position_id=149 admin_state=False gps_name=ANT003 ubicacion=Carrera 6 # 16-2 a 16-100, Pereira, Risaralda, Colombia 
+        gps_id=10 coord_state=False vehicle_id=4 name=Ignicion OFF id=45 user_state=False fecha=2012-08-28 11:56:51.360497-05:00 
+        placa=ttq000 position_id=148 admin_state=False gps_name=ANT003 
+        ubicacion=Carrera 6 # 16-2 a 16-100, Pereira, Risaralda, Colombia gps_id=10 coord_state=False
+    """
+    return config.DB.query("""
+            SELECT e.id, te.name, e.fecha, e.type AS tipo_event,
+            e.gps_id, g.name AS gps_name,
+            v.placa, v.id AS vehicle_id,
+            e.admin_state, e.user_state, e.coord_state,
+            e.positions_gps_id AS position_id, p.ubicacion, p.position
+            from eventos e
+            LEFT OUTER JOIN type_event AS te ON e.type=te.codigo
+            LEFT OUTER JOIN vehiculos AS v ON e.gps_id=v.gps_id
+            LEFT OUTER JOIN gps AS g ON e.gps_id=g.id
+            LEFT OUTER JOIN positions_gps AS p ON p.id=e.positions_gps_id
+            WHERE e.admin_state='f' ORDER BY e.id DESC;
+            """)
+
 
 def generalView():
     """

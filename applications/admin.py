@@ -24,6 +24,7 @@ urls = (
   "/addvehicle", "addvehicle",
   "/listvehicle","listvehicle",
   "/deletevehicle", "deletevehicle",
+  "/assignclient", "assignclient",
   "/addclient", "addclient",
   "/listclient", "listclient",
   "/deleteclient", "deleteclient",
@@ -31,20 +32,23 @@ urls = (
   "/listuser","listuser",
   "/listgspjson", "listgspjson",
   "/listingphones", "listingphones",
-  "/events","events",
+  #"/events","events",
   "/listeventjson","listeventjson",
+  "/viewmanagevent","viewmanagevent",
+  "/managevents","managevents",
+  "/listingclients","listingclients",
+  "/deleteevent", "deleteevent",
+  "/updateevent","updateevent",
 )
 
 class reuser:
     def GET(self):
         raise web.seeother('/')
 
-
 class index:
     @Sesion
     def GET(self):
         return renderbase_admin.index(web.ctx.path, web.ctx.session) 
-
 
 class addgps:
     @Sesion
@@ -68,7 +72,6 @@ class addgps:
         else:
             return renderbase_admin.addgps(web.ctx.session, f, msgerr=u'Los datos no son válidos.')
             
-
 class listgps:
     @Sesion
     def GET(self):
@@ -135,7 +138,6 @@ class addclient:
         else:
             return renderbase_admin.addclient(web.ctx.session, f, msgerr=u'Los datos no son válidos.')
 
-
 class listclient:
     @Sesion
     def GET(self):
@@ -177,12 +179,10 @@ class adduser:
         else:
             return renderbase_admin.adduser(web.ctx.session, f, msgerr=u'Los datos no son válidos.')
 
-
 class listuser:
     @Sesion
     def GET(self):
         return listuser
-
 
 class addvehicle:
     @Sesion
@@ -220,6 +220,10 @@ class listvehicle:
         #return listvehicle
         return renderbase_admin.listvehicle(web.ctx.session, listingAllVehicle())
 
+class assignclient:
+    @Sesion
+    def GET(self):
+        return assignclient
 
 class deletevehicle:
     @Sesion
@@ -249,7 +253,6 @@ class generalviewjson:
             return obj
         #return json.dumps([dthandler(row) for row in views])
         return json.dumps([dthandler(row) for row in generalView()])
-
 
 class generalview:
     @Sesion
@@ -286,10 +289,10 @@ class listingphones:
         web.header('content-Type', 'application/json')
         return json.dumps(listingPhones(i.id))
 
-class events:
-    @Sesion
-    def GET(self):
-        return events
+#class events:
+#    @Sesion
+#    def GET(self):
+#        return events
 
 class listeventjson:
     @Sesion
@@ -298,6 +301,58 @@ class listeventjson:
         from db import countEvent
         web.header('content-Type', 'application/json')
         return json.dumps([row for row in countEvent()])
+
+class viewmanagevent:
+    @Sesion
+    def GET(self): 
+        from db import unmanagedEventListAdmin
+        return render.admin.viewmanagevent(unmanagedEventListAdmin())
+
+class managevents:
+    @Sesion
+    def GET(self):
+        return renderbase_admin.managevents(web.ctx.session)
+
+class listingclients:
+    @Sesion
+    def GET(self):
+        """
+            http://127.0.0.1:8080/admin/listingclients?id=5
+
+            [["jorge,alonso,toro,hoyos", "11814584"]]
+        """
+        import simplejson as json
+        from db import listingClients
+
+        i = web.input(id=None)
+        #print "ID VEHICLE:", i.id
+        web.header('content-Type', 'application/json')
+        return json.dumps(listingClients(i.id))
+    
+class deleteevent:
+    @Sesion
+    def GET(self):
+        i = web.input(id=None)
+        #print "********************************************** Delete Event:", i.id
+        #return i.id
+        try:
+            DB.delete('eventos', where="id=$i.id", vars=locals())
+        except:
+            print "Error Inesperado /deleteclient:", sys.exc_info()
+        raise web.seeother('/managevents')
+    
+class updateevent:
+    @Sesion
+    def GET(self):
+        i = web.input(id=None)
+        #print "****************************** Update Event:", i.id
+        try:
+            DB.update('eventos', where='id=$i.id', admin_state='t', vars=locals())
+        except:
+            print "Error Inesperado /updateevent:", sys.exc_info()    
+        #return updateevent
+        raise web.seeother('/managevents')
+
 
 
 # App:
