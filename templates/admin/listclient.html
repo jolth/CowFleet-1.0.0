@@ -1,4 +1,5 @@
 $def with (session, clients, msg=None)
+<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 
 $# Nombre del cliente:
 $var username: $session.username.nombre1.lower().capitalize() $session.username.apellido1.lower().capitalize()
@@ -48,7 +49,6 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
 
 <p>$msg</p>
 
-<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 <script>
  jQuery(document).ready(function(){
     // Capitalize JavaScrip
@@ -56,9 +56,6 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
        return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
     };
 
-    jQuery('#tabla1').tableFilter();
-    jQuery(':input').addClass('input');
-    jQuery(':input').css('padding', '1px');;
 
     // Dialog Phones
     jQuery('#dialogphones').dialog({
@@ -159,5 +156,8 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
             return false;
     });
 
+    jQuery('#tabla1').tableFilter();
+    jQuery(':input').addClass('input');
+    jQuery(':input').css('padding', '1px');;
  });
 </script>

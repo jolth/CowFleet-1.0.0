@@ -1,4 +1,5 @@
 $def with (session, vehicles, msg=None)
+<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 
 $# Nombre del cliente:
 $var username: $session.username.nombre1.lower().capitalize() $session.username.apellido1.lower().capitalize()
@@ -30,14 +31,8 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
 
 <p>$msg</p>
 
-<script type="text/javascript" src="/static/js/picnet.table.filter.min.js"></script>
 <script>
  jQuery(document).ready(function(){
-
-    jQuery('#tabla1').tableFilter();
-    jQuery(':input').addClass('input');
-    jQuery(':input').css('padding', '1px');;
-
     // Dialog Delete
     jQuery('#dialogdelete').dialog({
              autoOpen: false,
@@ -70,6 +65,8 @@ $var username: $session.username.nombre1.lower().capitalize() $session.username.
             $$('#dialogdelete').dialog('open');
             return false;
     });
-
+    jQuery('#tabla1').tableFilter();
+    jQuery(':input').addClass('input');
+    jQuery(':input').css('padding', '1px');;
  });
 </script>
