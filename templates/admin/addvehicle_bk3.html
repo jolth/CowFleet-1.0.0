@@ -18,13 +18,7 @@ $if msgerr and form.valid: <p class="notifi">Intenta de Nuevo</p>
 jQuery(document).ready(function(){
         // ListGps
         //jQuery('#gps_id').attr('disabled', 'disabled');
-        var $$load252 = $$('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
-        //jQuery('#gps_id').parent().append('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
-        jQuery('#gps_id').parent().before('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
         jQuery('#gps_id').css('display', 'none');
-        jQuery('#load252')
-              .ajaxStart(function(){ jQuery(this).show(); })
-              .ajaxStop(function(){ jQuery(this).hide(); });
         var newElement = [];
         var newElement1 = [];
         jQuery.ajax({

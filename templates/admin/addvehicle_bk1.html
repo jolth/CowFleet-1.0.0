@@ -17,16 +17,7 @@ $if msgerr and form.valid: <p class="notifi">Intenta de Nuevo</p>
 <script>
 jQuery(document).ready(function(){
         // ListGps
-        //jQuery('#gps_id').attr('disabled', 'disabled');
-        var $$load252 = $$('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
-        //jQuery('#gps_id').parent().append('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
-        jQuery('#gps_id').parent().before('<div id="load252" style="background: url(/static/img/252.gif) no-repeat bottom right;height:5px;width:16px;"></div>');
-        jQuery('#gps_id').css('display', 'none');
-        jQuery('#load252')
-              .ajaxStart(function(){ jQuery(this).show(); })
-              .ajaxStop(function(){ jQuery(this).hide(); });
         var newElement = [];
-        var newElement1 = [];
         jQuery.ajax({
             url      : '/admin/listgspjson',
             //data     : { 'pais' : country },
@@ -35,14 +26,11 @@ jQuery(document).ready(function(){
 
             success  : function(json){
                 jQuery.each(json, function(index, obj){
-                    newElement1.push('<option value=' + obj[0] + '>' + obj[1] + '</option>');
-                    newElement.push('<li id="gps_id_chzn_o_'+ ++index + ' class="active-result">' + obj[1] + '</li>');
+                    newElement.push('<option value=' + obj[0] + '>' + obj[1] + '</option>');
                 });
-                jQuery('#gps_id').find(':first').after(newElement1.join(''));
-                $$('#gps_id_chzn ul').find(':first').after(newElement.join(''));
-                console.log(newElement1);
+                jQuery('#gps_id').find(':first').after(newElement.join(''));
                 console.log(newElement);
-                //jQuery('#gps_id').chosen();
+                jQuery('#gps_id').chosen();
                 //jQuery(".chzn-select").chosen();
             },
             error    : function(jqXHR, status, error){
@@ -51,21 +39,10 @@ jQuery(document).ready(function(){
             complete : function(jqXHR, status){
                 console.log("Petición terminada con estado: " + status);
                 console.log(jqXHR);
-                //jQuery('#gps_id').removeAttr('disabled');
-                //$$('#gps_id_chzn').css('display','inline-block');
-                //$$('#gps_id_chzn').addClass('chzn-container-active');
-                jQuery('#gps_id').chosen();
-                //jQuery(".chzn-select").chosen();
             }
         });
 
         //jQuery(".chzn-select").chosen();
-        //jQuery('.chzn-select').width('180');
-
-        //jQuery('#gps_id').chosen();
-        //$$('#gps_id_chzn').css('display','none');
-        //$$('#gps_id_chzn').click(function(){console.log(this); $$(this).addClass('chzn-container-active')});
-
         jQuery("#marca_id").chosen();
         jQuery("#clase_id").chosen();
         jQuery("#combustible_id").chosen();
@@ -73,7 +50,7 @@ jQuery(document).ready(function(){
         jQuery("#linea_id").chosen();
         jQuery("#color_id").chosen();
         jQuery("#servicio_id").chosen();
-
+        //jQuery('.chzn-select').width('180');
         // Limpiamos al recargar
         function resetForm($$form) {
             $$form.find('input:text, input:password, input:file, select, textarea').val('');
